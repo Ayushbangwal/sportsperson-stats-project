@@ -1,0 +1,19 @@
+{
+  "name": "sports-analytics-platform",
+  "version": "1.0.0",
+  "description": "A modern full-stack sports analytics web application",
+  "main": "server.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "client": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "install-deps": "cd backend && npm install && cd ../frontend && npm install"
+  },
+  "keywords": ["sports", "analytics", "react", "node", "mongodb"],
+  "author": "Sports Analytics Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
