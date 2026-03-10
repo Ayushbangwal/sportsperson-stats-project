@@ -25,13 +25,20 @@ exports.getPlayers = async (req, res) => {
     const sort = {};
     sort[sortBy] = sortOrder === 'desc' ? -1 : 1;
 
-    const players = await Player.find(filter)
-      .sort(sort)
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
-      .select('-__v');
+       let players = Player.filter(p => {
+  if (sport && p.sport !== sport) return false;
+  if (country && p.country !== country) return false;
+  if (team && p.team !== team) return false;
+  return true;
+});
+    
+    const total = players.length
+      players = players
+  .sort((a, b) => sortOrder === 'desc'
+    ? b[sortBy] - a[sortBy]
+    : a[sortBy] - b[sortBy]);
 
-    const total = await Player.countDocuments(filter);
+players = players.slice((page - 1) * limit, page * limit);
 
     res.json({
       players,
