@@ -1,4 +1,5 @@
 export default function handler(req, res) {
+
 const players = [
  { id: 1, name: "Virat Kohli", sport: "Cricket", country: "India" },
  { id: 2, name: "Lionel Messi", sport: "Football", country: "Argentina" },
@@ -8,19 +9,12 @@ const players = [
 
 const { id } = req.query;
 
-if (id) {
- const player = players.find(p => p.id === parseInt(id));
+const player = players.find(p => p.id === parseInt(id));
 
- if (!player) {
-   return res.status(404).json({ error: "Player not found" });
- }
-
- return res.status(200).json(player);
+if (!player) {
+ return res.status(404).json({ error: "Player not found" });
 }
 
-res.status(200).json({
- players: players,
- total: players.length
-});
+res.status(200).json(player);
 
 }
