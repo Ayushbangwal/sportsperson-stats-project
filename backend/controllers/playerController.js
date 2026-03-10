@@ -189,39 +189,48 @@ exports.getTopPlayers = async (req, res) => {
     const { sport, limit = 10 } = req.query;
 
     const filter = sport ? { sport } : {};
-    
+
     const players = await Player.find(filter)
       .sort({ popularity: -1 })
-      .limit(parseInt(limit))
-      .select('name sport country team image popularity');
+      .limit(parseInt(limit || 10))
+      .select('name sport country team image popularity') || [];
+
+    if (!players) {
+      return res.json({ players: [] });
+    }
 
     res.json({ players });
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
-
+exports.getSportsStats = async (req, res) => {
+  try {
 // @desc    Get sports statistics
 // @route   GET /api/players/stats
 // @access  Public
-exports.getSportsStats = async (req, res) => {
-  try {
-    const stats = await Player.aggregate([
-      {
-        $group: {
-          _id: '$sport',
-          count: { $sum: 1 },
-          averageAge: { $avg: '$age' },
-          totalAchievements: { $sum: { $size: '$achievements' } }
+const stats = await Player.aggregate([
+  {
+    $group: {
+      _id: '$sport',
+      count: { $sum: 1 },
+      averageAge: { $avg: '$age' },
+      totalAchievements: {
+        $sum: {
+          $size: { $ifNull: ['$achievements', []] }
         }
-      },
-      {
-        $sort: { count: -1 }
       }
-    ]);
-
-    res.json({ stats });
+    }
+  },
+  {
+    $sort: { count: -1 }
+  }
+]);
+res.json({ stats});
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({error : error.message});
   }
 };
+
+  
