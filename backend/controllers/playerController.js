@@ -205,11 +205,12 @@ exports.getTopPlayers = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-exports.getSportsStats = async (req, res) => {
-  try {
+
 // @desc    Get sports statistics
 // @route   GET /api/players/stats
 // @access  Public
+exports.getSportsStats = async (req, res) => {
+  try {
 const stats = await Player.aggregate([
   {
     $group: {
