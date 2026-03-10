@@ -1,4 +1,4 @@
-const Player = require('../models/Player');
+const Player = require('../data/Players');
 
 // @desc    Get all players
 // @route   GET /api/players
@@ -51,13 +51,16 @@ exports.getPlayers = async (req, res) => {
 // @access  Public
 exports.getPlayer = async (req, res) => {
   try {
-    const player = await Player.findById(req.params.id);
-    
+    const id = parseInt(req.params.id);
+
+    const player = players.find(p => p.id === id);
+
     if (!player) {
-      return res.status(404).json({ error: 'Player not found' });
+      return res.status(404).json({ error: "Player not found" });
     }
 
     res.json(player);
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
