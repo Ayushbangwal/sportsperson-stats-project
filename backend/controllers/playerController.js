@@ -32,7 +32,7 @@ exports.getPlayers = async (req, res) => {
   return true;
 });
     
-    const total = players.length
+    const total = players.length;
       players = players
   .sort((a, b) => sortOrder === 'desc'
     ? b[sortBy] - a[sortBy]
