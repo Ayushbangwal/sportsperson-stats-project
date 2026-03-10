@@ -120,7 +120,7 @@ const PlayerProfile = () => {
     );
   }
 
-  const sportStats = getSportSpecificStats(player.sport, player.statistics);
+  const sportStats = getSportSpecificStats(player.sport, player.statistics || {} );
 
   return (
     <motion.div
