@@ -29,7 +29,7 @@ const Home = () => {
         playerAPI.getSportsStats()
       ]);
       
-      setTopPlayers(topPlayersRes.data.players);
+      setTopPlayers(topPlayersRes.data.data);
       setSportsStats(statsRes.data.stats);
     } catch (error) {
       console.error('Error fetching data:', error);
