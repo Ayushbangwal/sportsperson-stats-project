@@ -23,25 +23,30 @@ const Home = () => {
   }, []);
 
   const fetchData = async () => {
-    try {
-      const [topPlayersRes, statsRes] = await Promise.all([
-        playerAPI.getTopPlayers({ limit: 6 }),
-        playerAPI.getSportsStats()
-      ]);
-      
-      
- setTopPlayers(
-  Array.isArray(topPlayersRes?.data)
-    ? topPlayersRes.data
-    : (topPlayersRes?.data?.players || [])
-);   
-    
-    setSportsStats(statsRes?.data?.stats ?? {});
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
+  
+  try {
+  const [topPlayersRes, statsRes] = await Promise.all([
+    playerAPI.getTopPlayers({ limit: 6 }),
+    playerAPI.getSportsStats()
+  ]);
+
+  setTopPlayers(
+    Array.isArray(topPlayersRes?.data?.players)
+      ? topPlayersRes.data.players
+      : []
+  );
+
+  setSportsStats(
+    Array.isArray(statsRes?.data?.stats)
+      ? statsRes.data.stats
+      : []
+  );
+
+} catch (error) {
+  console.error("Error fetching data:", error);
+} finally {
+  setLoading(false);
+}
   };
 
   const handleSearch = (e) => {
