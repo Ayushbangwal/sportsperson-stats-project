@@ -30,9 +30,15 @@ const Home = () => {
       ]);
       
       //setTopPlayers(topPlayersRes?.data?.players || []);
-      setTopPlayers(Array.isArray(topPlayersRes?.data?.players) ? topPlayersRes.data.players : []);
+      //setTopPlayers(Array.isArray(topPlayersRes?.data?.players) ? topPlayersRes.data.players : []);
+      setTopPlayers(
+  Array.isArray(topPlayersRes?.data?.players)
+    ? topPlayersRes.data.players
+    : []
+);    
       //setSportsStats(statsRes?.data?.stats || {} );
-      setSportsStats(statsRes?.data?.stats ?? {});
+     // setSportsStats(statsRes?.data?.stats ?? {});
+    setSportsStats(statsRes?.data?.stats ?? {});
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {
