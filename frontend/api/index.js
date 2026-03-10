@@ -1,18 +1,22 @@
 export default function handler(req, res) {
 
-  if (req.url.includes("/top")) {
-    return res.status(200).json([
-      { name: "Virat Kohli", sport: "Cricket", score: 95 },
-      { name: "Lionel Messi", sport: "Football", score: 98 }
-    ]);
-  }
+  const players = [
+    { id: 1, name: "Virat Kohli", sport: "Cricket", score: 95 },
+    { id: 2, name: "Lionel Messi", sport: "Football", score: 98 },
+    { id: 3, name: "LeBron James", sport: "Basketball", score: 97 },
+    { id: 4, name: "Novak Djokovic", sport: "Tennis", score: 96 }
+  ];
 
-  if (req.url.includes("/stats")) {
-    return res.status(200).json([
-      { sport: "Cricket", players: 10 },
-      { sport: "Football", players: 8 }
-    ]);
-  }
+  const { page = 1, limit = 12 } = req.query;
 
-  return res.status(200).json([]);
+  const start = (page - 1) * limit;
+  const end = start + Number(limit);
+
+  const paginatedPlayers = players.slice(start, end);
+
+  res.status(200).json({
+    players: paginatedPlayers,
+    total: players.length
+  });
+
 }
