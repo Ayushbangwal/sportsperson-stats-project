@@ -264,7 +264,7 @@ const PlayersList = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              <Link to={`/player/${player._id}`}>
+              <Link to={`/player/${player.id}`}>
                 <div className="card-hover bg-sports-card border border-sports-border rounded-xl overflow-hidden">
                   <div className="relative h-48 bg-gradient-to-br from-sports-primary to-sports-secondary">
                     <img
